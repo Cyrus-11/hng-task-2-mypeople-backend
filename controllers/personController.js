@@ -6,9 +6,8 @@ const Person = require("../models/personModel");
 
 const getUsers = asyncHandler( async (req,res) => {
     const person = await Person.find();
-    res.status(200).json(person);
+    res.status(200).json({message:"All Users",person});
 });
-
 //@desc CREATE New User
 //@route POST /api
 //@access public
@@ -23,7 +22,7 @@ const createPerson = asyncHandler ( async (req,res) => {
     const person = await Person.create({
         name,
     })
-    res.status(201).json(person);
+    res.status(201).json({message:"Person Created",person});
 });
 
 //@desc READ User
@@ -36,7 +35,7 @@ const getPerson = asyncHandler (async (req,res) => {
         res.status(404);
         throw new Error("Person not found");
     }
-    res.status(200).json(person);
+    res.status(200).json({message:"Person requested",person});
 });
 
 //@desc UPDATE User
@@ -55,7 +54,7 @@ const updatePerson = asyncHandler ( async (req,res) => {
         req.body,
         { new: true }
     );
-    res.status(200).json(updatedPerson);
+    res.status(200).json({message:"Person Updated", person});
 });
 
 //@desc DELETE User
@@ -66,10 +65,10 @@ const deletePerson = asyncHandler ( async (req,res) => {
     const person = await Person.findById(req.params.id)
     if(!person) {
         res.status(404);
-        throw new Error("Person not found");
+        throw new Error("Person has already being deleted");
     }
-    await Person.deleteOne();
-    res.status(200).json(person);
+    await Person.deleteOne(person);
+    res.status(200).json({message: "Person deleted", person});
 });
 
 module.exports = {
