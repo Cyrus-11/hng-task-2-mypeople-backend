@@ -65,7 +65,7 @@ To set up the project locally, follow these steps:
    - Add the following variables to the `.env` file:
    ```
    PORT=5001                 # Port on which the server will run
-   CONNECTION_STRING=mongodb+srv://admin:admin@cecilcluster.xzgiqr6.mongodb.net/mypeople-backend?retryWrites=true&w=majorit
+   CONNECTION_STRING=
    ```
 
 5. Start the server:
