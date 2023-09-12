@@ -34,7 +34,7 @@ const createPerson = asyncHandler ( async (req,res) => {
         res.status(201).json({message:"Person Created",person});
     }
    
-    res.status(404).json("User already Exist");
+    res.status(404).json({message:"User already Exist"});
 });
 //@desc READ User
 //@route GET /api/:id
