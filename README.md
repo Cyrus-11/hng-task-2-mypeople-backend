@@ -1,94 +1,215 @@
-# mypeople-backend
-# Node.js REST API for Managing Persons
+# HNGx Stage Two
 
-A simple Node.js REST API for performing CRUD operations on a "person" resource, with dynamic parameter handling, MongoDB integration, and UML diagrams.
+This is the repository that contains the code for the Stage Two task of the HNG Backend Internship.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Testing](#testing)
-- [UML Diagram](#uml-diagram)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
+## Description
+## Project Description: Node.js REST API for Managing Persons
 
-## Introduction
+**Overview:**
 
-This Node.js REST API allows you to manage a list of persons, including creating, reading, updating, and deleting person records. It's designed to be flexible, secure, and easy to use.
+This project is a robust and flexible RESTful API built using Node.js and MongoDB, designed to manage and manipulate data related to individuals or "persons." The API offers Create, Read, Update, and Delete (CRUD) operations for person records and includes dynamic parameter handling, making it a versatile tool for various applications.
 
-## Features
+**Key Features:**
 
-- Create a new person with a name.
-- Retrieve details of a person by ID.
-- Update the details of an existing person.
-- Delete a person by ID.
-- Dynamic parameter handling for CRUD operations based on name.
-- MongoDB integration for data storage.
+- **Create:** Add new person records to the database with relevant details, such as name, age, email, and more. The API ensures data integrity by validating input fields.
 
-## Prerequisites
+- **Read:** Retrieve detailed information about a specific person by their unique identifier (ID). Additionally, the API allows for dynamic querying based on a person's name, making it easy to retrieve records for individuals with the same name.
 
-Before you begin, ensure you have met the following requirements:
+- **Update:** Modify the attributes of an existing person, allowing you to keep your data up to date. Users can update information such as age, email, or any other person-specific data.
 
-- [Node.js](https://nodejs.org/) installed.
-- [MongoDB](https://www.mongodb.com/) database instance or connection string.
-- [Git](https://git-scm.com/) (for cloning the repository).
+- **Delete:** Remove a person record from the database by specifying the unique identifier (ID). This feature helps in maintaining an accurate and relevant database.
 
-## Getting Started
+- **Dynamic Parameter Handling:** The API goes beyond basic CRUD operations by introducing dynamic parameter handling. By utilizing the `name` query parameter, users can perform CRUD operations on persons with a specific name. This feature adds a layer of flexibility, enabling operations tailored to individual records based on their names.
 
-### Installation
+**Project Components:**
 
-1. Clone this repository:
+- **Express.js Application:** The project is built on the Express.js framework, providing a robust foundation for handling HTTP requests and routing.
 
-   ```bash
-   git clone https://github.com/yourusername/your-api-repo.git
-Change into the project directory:
+- **MongoDB Database:** Data is stored in a MongoDB database, ensuring scalability and flexibility in data management.
 
-bash
-Copy code
-cd your-api-repo
-Install dependencies:
+- **Mongoose ODM:** Mongoose, an Object Data Modeling (ODM) library, simplifies interaction with the MongoDB database, offering data validation and schema management.
 
-bash
-Copy code
-npm install
-Configuration
-Create a .env file in the root directory of the project and add the following environment variables:
+- **API Documentation:** A comprehensive API documentation file is provided, outlining the standard formats for requests and responses for each endpoint. It includes usage examples and instructions for setting up and deploying the API locally or on a server.
 
-env
-Copy code
-MONGODB_URI=your-mongodb-connection-string
-PORT=3000
-Replace your-mongodb-connection-string with your MongoDB connection string.
+**Usage and Deployment:**
 
-Usage
-To start the API, run the following command:
+This Node.js REST API can be easily integrated into various applications that require the management of person data. It can be deployed to your preferred hosting environment or cloud platform, and the provided documentation guides you through the setup process.
 
-bash
-Copy code
-npm start
-Your API will be accessible at http://localhost:3000 (or the port you specified in your .env file).
+**Contributions and Licensing:**
 
-API Endpoints
-POST /api/people: Create a new person.
-GET /api/people/:id: Retrieve details of a person by ID.
-PUT /api/people/:id: Update the details of an existing person by ID.
-DELETE /api/people/:id: Delete a person by ID.
-GET /api/people?name=Name: Perform CRUD operations based on name (dynamic parameter handling).
-Testing
-Testing of the API can be done using tools like Postman or writing automated tests using testing frameworks like Mocha and Chai. Ensure that you cover all CRUD operations and edge cases in your tests.
+Contributions to the project are welcome! Follow the guidelines in the repository for contributing. The project is licensed under the MIT License, ensuring open-source availability and flexibility.
 
-To run tests (example using Mocha and Chai):
+**Conclusion:**
 
-bash
-Copy code
-npm test
-UML Diagram
-UML Diagram
+The Node.js REST API for Managing Persons is a versatile and powerful tool for handling person-related data in your applications. Its CRUD capabilities, dynamic parameter handling, and clear documentation make it a valuable asset for developers working on projects that require data management of individual records.
 
-Include a UML diagram representing the structure and relationships of your API's classes and models.
+## Installation
+
+To set up the project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```
+   https://github.com/Cyrus-11/hng-task-2-mypeople-backend
+   ```
+
+2. Install project dependencies:
+
+   ```
+   npm install
+   ```
+
+4. Set up the environment variables:
+
+   - Create a `.env` file in the root directory of the project.
+   - Add the following variables to the `.env` file:
+   ```
+   PORT=5001                 # Port on which the server will run
+   CONNECTION_STRING=mongodb+srv://admin:admin@cecilcluster.xzgiqr6.mongodb.net/mypeople-backend?retryWrites=true&w=majorit
+   ```
+
+5. Start the server:
+
+   ```
+   npm start
+   ```
+
+The server will start running on `http://localhost:5001`.
+
+## API Endpoints
+
+The following endpoints are available:
+
+- GET /api: Retrieves all persons from the database.
+- POST /api: Creates a new person.
+- GET /api/user/:id: Retrieves a person by their ID.
+- PUT /api/user/:id: Updates a person by their ID.
+- DELETE /api/user:id: Deletes a person by their ID.
+
+Please note that the API supports both JSON request bodies and query parameters, depending on the endpoint.
+
+## Usage
+
+To interact with the API, you can use tools like Postman or cURL. Here are some example requests:
+
+- GET all persons:
+
+```
+
+GET http://localhost:5001/api
+
+```
+
+Response
+
+```
+{
+    "message": "All Users",
+    "person": [
+        {
+            "_id": "65002538ae4183e0d4897d81",
+            "name": "John Samuel",
+            "__v": 0
+        },
+        {
+            "_id": "65002847c6464a2b351c1f07",
+            "name": "john Doe",
+            "__v": 0
+        },
+        {
+            "_id": "650028f718acfe744e205a19",
+            "name": "john shanks",
+            "__v": 0
+        }
+    ]
+}
+```
+
+- POST a new person:
+
+```
+POST http://localhost:5001/api
+```
+
+Response:
+```
+ {
+    "message": "Person Created",
+    "person": {
+        "name": "John Lemon",
+        "_id": "650038b6538fea3e062a4988",
+        "__v": 0
+    }
+}
+```
+
+- GET a person by ID:
+
+```
+
+GET http://localhost:5001/api/user/:id
+
+```
+
+Response:
+
+```
+  {
+    "message": "Person requested",
+    "person": {
+        "_id": "650038b6538fea3e062a4988",
+        "name": "John Lemon",
+        "__v": 0
+    }
+}
+
+```
+
+- PUT a person by ID:
+
+```
+PUT http://localhost:5001/api/user/:id
+```
+Response:
+```
+{
+    "message": "Person Updated",
+    "person": {
+        "_id": "650038b6538fea3e062a4988",
+        "name": "John Lemon France",
+        "__v": 0
+    }
+}
+```
+
+- DELETE a person by ID:
+
+```
+DELETE http://localhost:5001/api/user/:id
+```
+
+Response:
+
+```
+{
+    "message": "Person deleted",
+    "person": {
+        "_id": "650038b6538fea3e062a4988",
+        "name": "John Lemon France",
+        "__v": 0
+    }
+}
+```
+
+
+## Author
+
+- [Egbiri Oluwayouinsola Cecil](https://github.com/Cyrus-11)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+```
+
+```
