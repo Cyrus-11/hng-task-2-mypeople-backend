@@ -87,7 +87,7 @@ Please note that the API supports both JSON request bodies and query parameters,
 ## Usage
 
 To interact with the API, you can use tools like Postman or cURL. Here are some example requests:
-- [Postman link for testing ](https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271?action=share&creator=29598696)
+- [Postman link for testing ] (https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271?action=share&creator=29598696)
 - GET all persons:
 
 ```
