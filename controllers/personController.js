@@ -26,7 +26,7 @@ const createPerson = asyncHandler ( async (req,res) => {
 });
 
 //@desc READ User
-//@route GET /api/user/:id
+//@route GET /api/:id
 //@access public
 
 const getPerson = asyncHandler (async (req,res) => {
@@ -39,7 +39,7 @@ const getPerson = asyncHandler (async (req,res) => {
 });
 
 //@desc UPDATE User
-//@route PUT /api/user/:id
+//@route PUT /api/:id
 //@access public
 
 const updatePerson = asyncHandler ( async (req,res) => {
@@ -58,7 +58,7 @@ const updatePerson = asyncHandler ( async (req,res) => {
 });
 
 //@desc DELETE User
-//@route DELETE/api/user/:id
+//@route DELETE/api/:id
 //@access public
 
 const deletePerson = asyncHandler ( async (req,res) => {
