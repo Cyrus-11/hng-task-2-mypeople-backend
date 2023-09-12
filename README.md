@@ -147,7 +147,7 @@ Response:
 
 ```
 
-GET http://localhost:5001/api/user/:id
+GET http://localhost:5001/api/:id
 
 ```
 
@@ -168,7 +168,7 @@ Response:
 - PUT a person by ID:
 
 ```
-PUT http://localhost:5001/api/user/:id
+PUT http://localhost:5001/api/:id
 ```
 Response:
 ```
@@ -185,7 +185,7 @@ Response:
 - DELETE a person by ID:
 
 ```
-DELETE http://localhost:5001/api/user/:id
+DELETE http://localhost:5001/api/:id
 ```
 
 Response:
@@ -205,6 +205,7 @@ Response:
 ## Author
 
 - [Egbiri Oluwayouinsola Cecil](https://github.com/Cyrus-11)
+- [Postman link ](https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271?action=share&creator=29598696)
 
 ## License
 
