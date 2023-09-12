@@ -22,10 +22,19 @@ const createPerson = asyncHandler ( async (req,res) => {
         res.status(400);
        throw new Error("All fields are required !");
     }
-    const person = await Person.create({
-        name,
+    const existingUser = await Person.find({
+        $or: [{ name }],
+    }).catch((e) => {
+        return res.status(500).send({ "message": e })
     })
-    res.status(201).json({message:"Person Created",person});
+    if (existingUser.length === 0) {
+        const person = await Person.create({
+            name,
+        })
+        res.status(201).json({message:"Person Created",person});
+    }
+   
+    res.status(404).json("User already Exist");
 });
 //@desc READ User
 //@route GET /api/:id
