@@ -35,10 +35,6 @@ This project is a robust and flexible RESTful API built using Node.js and MongoD
 
 This Node.js REST API can be easily integrated into various applications that require the management of person data. It can be deployed to your preferred hosting environment or cloud platform, and the provided documentation guides you through the setup process.
 
-**Contributions and Licensing:**
-
-Contributions to the project are welcome! Follow the guidelines in the repository for contributing. The project is licensed under the MIT License, ensuring open-source availability and flexibility.
-
 **Conclusion:**
 
 The Node.js REST API for Managing Persons is a versatile and powerful tool for handling person-related data in your applications. Its CRUD capabilities, dynamic parameter handling, and clear documentation make it a valuable asset for developers working on projects that require data management of individual records.
@@ -82,16 +78,16 @@ The following endpoints are available:
 
 - GET /api: Retrieves all persons from the database.
 - POST /api: Creates a new person.
-- GET /api/user/:id: Retrieves a person by their ID.
-- PUT /api/user/:id: Updates a person by their ID.
-- DELETE /api/user:id: Deletes a person by their ID.
+- GET /api/:id: Retrieves a person by their ID.
+- PUT /api/:id: Updates a person by their ID.
+- DELETE /api/:id: Deletes a person by their ID.
 
 Please note that the API supports both JSON request bodies and query parameters, depending on the endpoint.
 
 ## Usage
 
 To interact with the API, you can use tools like Postman or cURL. Here are some example requests:
-
+- [Postman link for testing ](https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271?action=share&creator=29598696)
 - GET all persons:
 
 ```
@@ -205,11 +201,6 @@ Response:
 ## Author
 
 - [Egbiri Oluwayouinsola Cecil](https://github.com/Cyrus-11)
-- [Postman link ](https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271?action=share&creator=29598696)
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ```
 
