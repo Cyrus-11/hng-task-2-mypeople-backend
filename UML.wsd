@@ -1,0 +1,17 @@
+   +-----------------+           +-------------------+
+   |    Person       |           |  PersonController |
+   +-----------------+           +-------------------+
+   | - _id: ObjectId |           | - get all users() |
+   | - name: String  |           | - createPerson()  |
+   | - ...           |           | - getPersonById() |
+   |                 |           | - updatePerson()  |
+   |                 |           | - deletePerson()  |
+   +-----------------+           |                   |
+                                +-------------------+
+   +-----------------+
+   | Express App     |
+   +-----------------+
+   | - Define routes |
+   | - Middleware    |
+   | - Database conn |
+   +-----------------+
