@@ -25,7 +25,7 @@ const createPerson = asyncHandler ( async (req,res) => {
     const existingUser = await Person.find({
         $or: [{ name }],
     }).catch((e) => {
-        return res.status(500).send()
+        return res.status(500).send("Server error")
     })
     if (existingUser.length === 0) {
         const person = await Person.create({
