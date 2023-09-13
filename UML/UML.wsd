@@ -1,18 +1,23 @@
-   +-----------------+           +-------------------+
-   |    Person       |           |  PersonController |
-   +-----------------+           +-------------------+
-   | - _id: ObjectId |           | - get all users() |
-   | - name: String  |           | - createPerson()  |
-   | - ...           |           | - getPersonById() |
-   |                 |           | -updatePersonById()|
-   |                 |           | -deletePersonById()|
-   +-----------------+           +-------------------+
-                                 
-   +-----------------+          +--------------------+
-   | Express App     |          |     Mongodb        | 
-   +-----------------+  |       +--------------------+
-   | - Define routes |          |StorePresonRequest  |
-   | - Middleware    |          |FetchPersonRequest  |
-   | - Database conn |          |UpdatePersonRequest |
-    +-----------------+         |DeletePersonRequest |
-                                +--------------------+
++-----------------+           +-------------------+            +----------------------+
+|    Person       |           |  PersonController |            |   Error Handling     |
++-----------------+           +-------------------+            +----------------------+
+| - _id: ObjectId |           | - get all users() |            | - Handle errors      |
+| - name: String  |           | - createPerson()  |            | - Return error       |
+| - ...           |           | - getPersonById() |            |   responses          |
+|                 |           | - updatePersonById()|          |                      |
+|                 |           | - deletePersonById()|          +----------------------+
++-----------------+           +-------------------+                     ^
+       |                             |                                    |
+       |                             |                                    |
+       |                             |                                    |
+       |                             |                                    |
+       |                             |                                    |
++-----------------+           +--------------------+                     |
+| Express App     |           |     MongoDB        |                     |
++-----------------+           +--------------------+                     |
+| - Define routes |           | - StorePersonRequest  |                 |
+| - Middleware    |           | - FetchPersonRequest  |                 |
+| - Database conn |           | - UpdatePersonRequest |                 |
++-----------------+           | - DeletePersonRequest |                 |
+                              +--------------------+---------------------+
+

@@ -4,206 +4,134 @@ const app = require('../server'); // Replace with the correct path to your Expre
 const expect = chai.expect;
 
 chai.use(chaiHttp);
-//Test to get all users
+
+// Test to get all users
 pm.test("Response status code is 200", function () {
     pm.response.to.have.status(200);
 });
 
-// Remove redundant tests for response properties
-
-
-pm.test("Response status code is 200", function () {
-    pm.expect(pm.response.code).to.equal(200);
-});
-
-
-pm.test("Response has the required fields", function () {
+// Assert the presence of required response fields
+pm.test("Response contains expected fields", function () {
     const responseData = pm.response.json();
 
     pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData).to.have.property('message');
-    pm.expect(responseData).to.have.property('person');
+    pm.expect(responseData).to.include.all.keys('message', 'person');
 });
 
-
-pm.test("The _id field is a non-empty string", function () {
+// Validate each person's _id
+pm.test("Each person has a valid _id", function () {
     const responseData = pm.response.json();
 
-    pm.expect(responseData).to.be.an('object');
     pm.expect(responseData.person).to.be.an('array');
 
     responseData.person.forEach(function (person) {
-        pm.expect(person._id).to.be.a('string').and.to.have.lengthOf.at.least(1, "_id should not be empty");
+        pm.expect(person).to.have.property('_id').that.is.a('string').and.has.length.greaterThan(0);
     });
 });
 
-
-pm.test("Name is a non-empty string", function () {
+// Validate each person's name
+pm.test("Each person has a valid name", function () {
     const responseData = pm.response.json();
 
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person).to.exist.and.to.be.an('array');
+    pm.expect(responseData.person).to.be.an('array');
 
     responseData.person.forEach(function (person) {
-        pm.expect(person.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, "Name should not be empty");
+        pm.expect(person).to.have.property('name').that.is.a('string').and.has.length.greaterThan(0);
     });
 });
-//Test to create new person
-// Check if the response contains an 'error' property
-if (pm.response.json().hasOwnProperty('error')) {
+
+// Test for creating a new person
+const responseJson = pm.response.json();
+
+if (responseJson.hasOwnProperty('error')) {
     // Tests for scenarios where the user already exists
-    pm.test("Response should have status 409 for existing user", function () {
+    pm.test("Response status code should be 409 for existing user", function () {
         pm.response.to.have.status(409);
     });
 
     pm.test("Response should contain 'error' property for existing user", function () {
-        pm.expect(pm.response.json()).to.have.property('error');
+        pm.expect(responseJson).to.have.property('error');
     });
 } else {
     // Tests for scenarios where the user does not exist
     pm.test("Response should not contain 'error' property for new user", function () {
-        pm.expect(pm.response.json()).to.not.have.property('error');
+        pm.expect(responseJson).to.not.have.property('error');
     });
 
-    pm.test("Response should have status 200 for new user", function () {
+    pm.test("Response status code should be 201 for new user", function () {
         pm.response.to.have.status(201);
     });
 
-    pm.test("Response should contain 'message' and 'person' properties for new user", function () {
-        var jsonData = pm.response.json();
-        pm.expect(jsonData).to.have.property('message');
-        pm.expect(jsonData).to.have.property('person');
+    pm.test("Response contains 'message' and 'person' properties for new user", function () {
+        pm.expect(responseJson).to.include.all.keys('message', 'person');
     });
 
     pm.test("Name in the response should match the name in the request", function () {
-        var jsonData = pm.response.json();
-        var requestBody = pm.request.json();
-
-        pm.expect(jsonData.person.name).to.equal(requestBody.name);
+        const requestBody = pm.request.json();
+        pm.expect(responseJson.person.name).to.equal(requestBody.name);
     });
 
     pm.test("Response should contain 'id' property for new user", function () {
-        var jsonData = pm.response.json().person;
-        pm.expect(jsonData).to.have.property('_id');
-
-        // Save the 'id' as an environment variable
-        pm.environment.set("userId", jsonData._id);
+        pm.expect(responseJson.person).to.have.property('_id');
+        pm.environment.set("userId", responseJson.person._id);
     });
 }
-
-//Test to get person by id
+// Test to get a person by ID
 
 pm.test("Response status code is 200", function () {
     pm.response.to.have.status(200);
 });
 
-
-pm.test("Response has the required fields - message and person", function () {
+pm.test("Response contains expected fields", function () {
     const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.message).to.exist;
-    pm.expect(responseData.person).to.exist;
+    pm.expect(responseData).to.include.all.keys('message', 'person');
 });
 
-
-pm.test("Person has the required fields - _id and name", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person).to.exist;
-    pm.expect(responseData.person._id).to.exist;
-    pm.expect(responseData.person.name).to.exist;
+pm.test("Person object has valid _id and name properties", function () {
+    const responseData = pm.response.json().person;
+    pm.expect(responseData).to.have.property('_id').that.is.a('string').and.has.length.greaterThan(0);
+    pm.expect(responseData).to.have.property('name').that.is.a('string').and.has.length.greaterThan(0);
 });
 
+// Test for updating a person
 
-pm.test("Check that _id is a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person._id).to.be.a('string').and.to.have.lengthOf.at.least(1, "Value should not be empty");
-});
-
-
-pm.test("Name is a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, "Name should not be empty");
-});
-
-//Test for updating person
 pm.test("Response status code is 200", function () {
     pm.response.to.have.status(200);
 });
 
-
-pm.test("Response has the required fields - message and person", function () {
+pm.test("Response contains expected fields", function () {
     const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData).to.have.property('message');
-    pm.expect(responseData).to.have.property('person');
+    pm.expect(responseData).to.include.all.keys('message', 'person');
 });
 
-
-pm.test("Person object has the required fields - _id and name", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData.person).to.exist.and.to.be.an('object');
-    pm.expect(responseData.person._id).to.exist.and.to.be.a('string');
-    pm.expect(responseData.person.name).to.exist.and.to.be.a('string');
+pm.test("Person object has valid _id and name properties", function () {
+    const responseData = pm.response.json().person;
+    pm.expect(responseData).to.have.property('_id').that.is.a('string').and.has.length.greaterThan(0);
+    pm.expect(responseData).to.have.property('name').that.is.a('string').and.has.length.greaterThan(0);
 });
 
-
-pm.test("Check that _id is a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person._id).to.be.a('string').and.to.have.lengthOf.at.least(1, "Value should not be empty");
-});
-
-
-pm.test("Name is a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, "Name should not be empty");
-});
-
-//Test for deleting person
-
+// Test for deleting a person
 
 pm.test("Response status code is 200", function () {
     pm.expect(pm.response.code).to.equal(200);
 });
 
-
 pm.test("Message is a non-empty string", function () {
     const responseData = pm.response.json();
-
-    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, "Value should not be empty");
+    pm.expect(responseData.message).to.be.a('string').and.has.length.greaterThan(0);
 });
-
 
 pm.test("Person object is present in the response", function () {
     const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person).to.exist;
+    pm.expect(responseData).to.have.property('person');
 });
-
 
 pm.test("The _id must be a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData).to.be.an('object');
-    pm.expect(responseData.person._id).to.exist.and.to.be.a('string').and.to.not.be.empty;
+    const responseData = pm.response.json().person;
+    pm.expect(responseData._id).to.be.a('string').and.not.empty;
 });
 
-
 pm.test("Name is a non-empty string", function () {
-    const responseData = pm.response.json();
-
-    pm.expect(responseData.person.name).to.be.a('string').and.to.have.lengthOf.at.least(1, "Name should not be empty");
+    const responseData = pm.response.json().person;
+    pm.expect(responseData.name).to.be.a('string').and.has.length.greaterThan(0);
 });

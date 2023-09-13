@@ -1,87 +1,103 @@
 const asyncHandler = require("express-async-handler");
 const Person = require("../models/personModel");
-//@desc Get all Users
-//@route GET /api
-//@access public
-// Handle CRUD operations based on the 'name' query paramete
-// Perform operations based on the provided 'name'
-// Example: Fetch all persons with the provided 'name'
-// Implement logic to handle CRUD operations based on the provided name and given id by the database
-const getUsers = asyncHandler( async (req,res) => {
-    const person = await Person.find();
-    res.status(200).json({message:"All Users",person});
+
+/**
+ * @desc Get all persons
+ * @route GET /api
+ * @access Public
+ * @description Retrieve a list of all persons or filter by 'name' query parameter.
+ */
+const getUsers = asyncHandler(async (req, res) => {
+  const persons = await Person.find();
+  res.status(200).json({ message: "All Persons", persons });
 });
-//@desc CREATE New User
-//@route POST /api
-//@access public
-// Implement the CREATE operation
-const createPerson = asyncHandler ( async (req,res) => {
-    console.log("The request body is : ", req.body);
-    const {name} = req.body;
-    if(!name){
-        res.status(400);
-       throw new Error("All fields are required !");
+
+/**
+ * @desc Create a new person
+ * @route POST /api
+ * @access Public
+ * @description Create a new person record with the provided 'name'.
+ */
+ createPerson = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+
+  if (!name) {
+    res.status(400).json({ error: "Name is required" });
+    return;
+  }
+
+  try {
+    const existingUser = await Person.findOne({ name });
+
+    if (existingUser) {
+      res.status(409).json({ error: "User already exists" });
+    } else {
+      const person = await Person.create({ name });
+      res.status(201).json({ message: "Person Created", person });
     }
-    const existingUser = await Person.find({
-        $or: [{ name }],
-    }).catch((e) => {
-        return res.status(500).send("Server error")
-    })
-    if (existingUser.length === 0) {
-        const person = await Person.create({
-            name,
-        })
-        res.status(201).json({message:"Person Created",person});
-    }
-   
-    res.status(404).json({message:"User already Exist"});
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
-//@desc READ User
-//@route GET /api/:id
-//@access public
-// Implement the READ operation
-const getPerson = asyncHandler (async (req,res) => {
-    const person = await Person.findById(req.params.id)
-    if(!person) {
-        res.status(404);
-        throw new Error({"error":"Person not found"});
-    }
-    res.status(200).json({message:"Person Found",person});
+
+/**
+ * @desc Read a person by ID
+ * @route GET /api/:id
+ * @access Public
+ * @description Retrieve a person by their unique identifier (ID).
+ */
+ const getPerson = asyncHandler(async (req, res) => {
+  const person = await Person.findById(req.params.id);
+
+  if (!person) {
+    res.status(404).json({ error: "Person not found" });
+  } else {
+    res.status(200).json({ message: "Person Found", person });
+  }
 });
-//@desc UPDATE User
-//@route PUT /api/:id
-//@access public
-// Implement the UPDATE operation
-const updatePerson = asyncHandler ( async (req,res) => {
-    const person = await Person.findById(req.params.id)
-    if(!person) {
-        res.status(404);
-        throw new Error({"error":"Person not found"});
-    }
+
+/**
+ * @desc Update a person by ID
+ * @route PUT /api/:id
+ * @access Public
+ * @description Update the details of a person by their ID.
+ */
+ const updatePerson = asyncHandler(async (req, res) => {
+  const person = await Person.findById(req.params.id);
+
+  if (!person) {
+    res.status(404).json({ error: "Person not found" });
+  } else {
     const updatedPerson = await Person.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
+      req.params.id,
+      req.body,
+      { new: true }
     );
-    res.status(200).json({message:"Person Updated", person});
+    res.status(200).json({ message: "Person Updated", person: updatedPerson });
+  }
 });
-//@desc DELETE User
-//@route DELETE/api/:id
-//@access public
-// Implement the DELETE operation
-const deletePerson = asyncHandler ( async (req,res) => {
-    const person = await Person.findById(req.params.id)
-    if(!person) {
-        res.status(404);
-        throw new Error({"error":"Person has already being deleted"});
-    }
+
+/**
+ * @desc Delete a person by ID
+ * @route DELETE /api/:id
+ * @access Public
+ * @description Delete a person record by their ID.
+ */
+ const deletePerson = asyncHandler(async (req, res) => {
+  const person = await Person.findById(req.params.id);
+
+  if (!person) {
+    res.status(404).json({ error: "Person not found" });
+  } else {
     await Person.deleteOne(person);
-    res.status(200).json({message: "Person deleted", person});
+    res.status(200).json({ message: "Person deleted", person });
+  }
 });
+
 module.exports = {
-     getUsers, 
-     createPerson, 
-     getPerson,
-     updatePerson, 
-     deletePerson,
+  getUsers,
+  createPerson,
+  getPerson,
+  updatePerson,
+  deletePerson,
 };
