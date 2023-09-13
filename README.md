@@ -1,7 +1,7 @@
 - [UML Diagram link]
 (https://lucid.app/lucidchart/ae14929a-6df8-4117-9334-bfa2c37d7b1c/view?invitationId=inv_11b628ff-f12f-44ab-991f-15c6da967228&page=HWEp-vi-RSFO#)
 
-- [Postman link for testing] (https://www.postman.com/blue-station-323788/workspace/hng-task-2/request/29598696-8c631185-e362-42ac-a6b2-e1dd15c657d0)
+- [Postman link for testing] (https://www.postman.com/blue-station-323788/workspace/hng-task-2/collection/29598696-ccab6453-2948-4096-b88f-9332efd88271)
 
 # HNGx Stage Two
 
