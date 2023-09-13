@@ -25,7 +25,7 @@ const createPerson = asyncHandler ( async (req,res) => {
     const existingUser = await Person.find({
         $or: [{ name }],
     }).catch((e) => {
-        return res.status(500).send({ "message": e })
+        return res.status(500).send()
     })
     if (existingUser.length === 0) {
         const person = await Person.create({
@@ -44,9 +44,9 @@ const getPerson = asyncHandler (async (req,res) => {
     const person = await Person.findById(req.params.id)
     if(!person) {
         res.status(404);
-        throw new Error("Person not found");
+        throw new Error({"error":"Person not found"});
     }
-    res.status(200).json({message:"Person requested",person});
+    res.status(200).json({message:"Person Found",person});
 });
 //@desc UPDATE User
 //@route PUT /api/:id
@@ -56,7 +56,7 @@ const updatePerson = asyncHandler ( async (req,res) => {
     const person = await Person.findById(req.params.id)
     if(!person) {
         res.status(404);
-        throw new Error("Person not found");
+        throw new Error({"error":"Person not found"});
     }
     const updatedPerson = await Person.findByIdAndUpdate(
         req.params.id,
@@ -73,7 +73,7 @@ const deletePerson = asyncHandler ( async (req,res) => {
     const person = await Person.findById(req.params.id)
     if(!person) {
         res.status(404);
-        throw new Error("Person has already being deleted");
+        throw new Error({"error":"Person has already being deleted"});
     }
     await Person.deleteOne(person);
     res.status(200).json({message: "Person deleted", person});
