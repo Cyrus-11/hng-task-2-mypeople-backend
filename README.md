@@ -1,3 +1,6 @@
+#UML Diagram link
+(https://lucid.app/lucidchart/ae14929a-6df8-4117-9334-bfa2c37d7b1c/view?invitationId=inv_11b628ff-f12f-44ab-991f-15c6da967228&page=HWEp-vi-RSFO#)
+
 # HNGx Stage Two
 
 This is the repository that contains the code for the Stage Two task of the HNG Backend Internship.
